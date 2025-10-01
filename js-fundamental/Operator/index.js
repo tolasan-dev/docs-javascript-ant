@@ -6,4 +6,4 @@
 // 1. Operator js
 
 let i = 10 + 20;
-Console.log(i);
+console.log(i);
