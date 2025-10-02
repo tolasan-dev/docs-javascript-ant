@@ -1,0 +1,67 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      body {
+        height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="warpper">
+      <div class="panel-1">
+        <input type="text" id="txt" value="" placeholder="Enter price" />
+        <button id="checkBtn" onclick="display()">Check</button>
+        <h3 id="result"></h3>
+       
+      </div>
+    </div>
+    <script>
+      // Check price and apply discount if applicable
+
+      function display() {
+        let price = document.getElementById("txt").value;
+        let result = document.getElementById("result");
+
+        if (isNaN(price) || price < 0) {
+          result.innerHTML = " invalid!"
+           
+        } else if (price >= 100){
+          let discounted = price * 0.9;
+          result.innerHTML = `Discount applied Final price: `;
+        } else {
+          result.innerHTML = `No discount. Price: ${price}$`;
+        }
+      }
+
+    //   document.getElementById("checkBtn").addEventListener("click", display);
+    </script>
+    <!-- <script>
+      // check positive and negative number and zero
+
+      function display() {
+        let num = Number(document.getElementById("txt").value);
+        let result = document.getElementById("result");
+
+        if (isNaN(num)) {
+          result.innerHTML = "WTF, Please invalid Number!";
+        } else if (num > 0) {
+          result.innerHTML = "Positive number";
+        } else if (num < 0) {
+          result.innerHTML = "Negative number";
+        } else {
+          result.innerHTML = "Zero";
+        }
+      }
+
+      document.getElementById("checkBtn").addEventListener("click", display);
+    </script> -->
+  </body>
+</html>
