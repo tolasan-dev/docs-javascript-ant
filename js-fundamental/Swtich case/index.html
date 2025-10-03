@@ -1,0 +1,88 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Switch case</title>
+    <style>
+      .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50vh;
+      }
+      .wrapper form {
+        border: 1px solid black;
+        padding: 20px;
+        height: 200px;
+        width: 300px;
+      }
+      button {
+        background-color: rgb(61, 61, 255);
+        color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: rgb(51, 51, 241);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <form>
+        <h4>Enter any number : range between(1-7)</h4>
+        <input type="text" id="getValue" />
+        <button type="button" onclick="display()">Check</button>
+        <h2 id="result"></h2>
+      </form>
+    </div>
+    <script>
+      function display() {
+        let getValue = document.getElementById("getValue");
+
+        let showResult = document.getElementById("result");
+
+        let dayOfweek = getValue.value;
+
+        let dayName = "";
+        let dayType = "";
+        switch (dayOfweek) {
+          case "1":
+            dayName = "Monday";
+            dayType = "Weekday";
+            break;
+          case "2":
+            dayName = "Tuesday";
+            dayType = "Weekday";
+            break;
+          case "3":
+            dayName = "Wednesday";
+            dayType = "Weekday";
+            break;
+          case "4":
+            dayName = "Thursday";
+            dayType = "Weekday";
+            break;
+          case "5":
+            dayName = "Friday";
+            dayType = "Weekday";
+            break;
+          case "6":
+            dayName = "Saturday";
+            dayType = "Weekend";
+            break;
+          case "7":
+            dayName = "Sunday";
+            dayType = "Weekend";
+            break;
+          default:
+            showResult.innerHTML = "Please enter a number between 1 and 7";
+            return;
+        }
+        showResult.innerHTML = `Day: <b>${dayName}</b><br>Type: <b>${dayType}</b>`;
+      }
+    </script>
+  </body>
+</html>

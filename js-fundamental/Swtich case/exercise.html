@@ -1,0 +1,54 @@
+<!-- ...existing code... -->
+      <form onsubmit="display(event)">
+        <h4>Enter any number : range between(1-7)</h4>
+        <input type="text" id="getValue" />
+        <button type="submit">Check</button>
+        <h2 id="result"></h2>
+      </form>
+<!-- ...existing code... -->
+    <script>
+      function display(event) {
+        event.preventDefault(); // Prevent form submission
+
+        const getValue = document.getElementById("getValue").value.trim();
+        const showResult = document.getElementById("result");
+        let dayName = "";
+        let dayType = "";
+
+        // Validate input is a number between 1 and 7
+        if (!/^[1-7]$/.test(getValue)) {
+          showResult.innerHTML = "Please enter a valid number between 1 and 7.";
+          return;
+        }
+
+        switch (getValue) {
+          case "1":
+            dayName = "Monday";
+            break;
+          case "2":
+            dayName = "Tuesday";
+            break;
+          case "3":
+            dayName = "Wednesday";
+            break;
+          case "4":
+            dayName = "Thursday";
+            break;
+          case "5":
+            dayName = "Friday";
+            break;
+          case "6":
+            dayName = "Saturday";
+            break;
+          case "7":
+            dayName = "Sunday";
+            break;
+        }
+
+        // Use ternary operator to check if weekend or weekday
+        dayType = (getValue === "6" || getValue === "7") ? "Weekend" : "Weekday";
+
+        showResult.innerHTML = `Day: <b>${dayName}</b><br>Type: <b>${dayType}</b>`;
+      }
+    </script>
+<!-- ...existing code... -->
