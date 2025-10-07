@@ -1,0 +1,33 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practices</title>
+  </head>
+  <body>
+    <!-- <script>
+      function information(name, birthYear) {
+        let greeting = "Hello " + name + "!";
+        let currentYear = new Date().getFullYear();
+        let currentAge = currentYear - birthYear;
+
+        console.log(greeting + " You are " + currentAge + " years old.");
+      }
+
+      let display = information()
+
+    </script> -->
+
+    <label for="text">Enter a number</label>
+    <input type="text" id="operator" />
+    <button id="" onclick="operation()">double</button>
+    <h1 id="result"></h1>
+    <script>
+      function operation() {
+        let inputNum = parseFloat(getElementById("operator").value);
+        let operation = inputNum * 2;
+        document.getElementById("result").innerHTML = inputNum + " " + " doubled is " + operation;
+      }
+    </script>
+  </body>
+</html>
