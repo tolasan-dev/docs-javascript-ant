@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>System Theme Example</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      .dropdown-menu li:nth-child(1):hover .dropdown-item {
+        background-color: rgba(255, 193, 127, 0.353);
+        color: rgba(255, 193, 127, 0.929) !important;
+      }
+      .dropdown-menu li:nth-child(2):hover .dropdown-item {
+        background-color: rgba(140, 127, 255, 0.263);
+        color: rgb(140, 127, 255);
+      }
+      .dropdown-menu li:nth-child(3):hover .dropdown-item {
+        background-color: rgba(105, 241, 148, 0.236);
+        color: rgb(24, 199, 79);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-5 text-center">
+      <h1>Hello, world!</h1>
+      <p>This theme follows your system settings automatically.</p>
+      <button id="themeToggle" class="btn btn-primary mt-3">
+        Toggle Theme
+      </button>
+
+      <div class="dropdown">
+        <button
+          class="btn btn-default dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Theme
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li>
+            <a class="dropdown-item" href="#" data-theme="dark">Dark mode</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#" data-theme="light">Light Mode</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#" data-theme="system"
+              >System Mode</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div
+        id="hoverBox"
+        style="
+          width: 200px;
+          height: 100px;
+          background-color: lightblue;
+          text-align: center;
+          line-height: 100px;
+        "
+      >
+        Hover me
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Function to set theme manually or use system preference
+      function setTheme(theme) {
+        if (theme === "system") {
+          localStorage.removeItem("theme");
+          applySystemTheme();
+        } else {
+          localStorage.setItem("theme", theme);
+          document.documentElement.setAttribute("data-bs-theme", theme);
+        }
+      }
+
+      // Get saved theme (if any)
+      function getStoredTheme() {
+        return localStorage.getItem("theme") || "system";
+      }
+
+      // Apply system preference (auto-detect dark/light)
+      function applySystemTheme() {
+        const isDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const theme = isDark ? "dark" : "light";
+        document.documentElement.setAttribute("data-bs-theme", theme);
+      }
+
+      // Watch for system theme changes
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", () => {
+          if (getStoredTheme() === "system") applySystemTheme();
+        });
+
+      // Apply initial theme on page load
+      const saved = getStoredTheme();
+      saved === "system"
+        ? applySystemTheme()
+        : document.documentElement.setAttribute("data-bs-theme", saved);
+
+      // Handle button click to toggle themes
+      const btn = document.getElementById("themeToggle");
+      btn.addEventListener("click", () => {
+        const current = getStoredTheme();
+        let next;
+
+        // Cycle through: system → light → dark → system
+        if (current === "system") next = "light";
+        else if (current === "light") next = "dark";
+        else next = "system";
+
+        setTheme(next);
+        btn.textContent = `Theme: ${next}`;
+      });
+
+      // Show current theme on load
+      btn.textContent = `Theme: ${getStoredTheme()}`;
+
+      // Add event listeners to dropdown items
+      document
+        .querySelectorAll(".dropdown-item[data-theme]")
+        .forEach((item) => {
+          item.addEventListener("click", function (e) {
+            e.preventDefault();
+            const theme = this.getAttribute("data-theme");
+            setTheme(theme);
+            btn.textContent = `Theme: ${theme}`;
+          });
+        });
+
+      document
+        .querySelectorAll(".dropdown-item[data-theme]")
+        .forEach((item) => {
+          item.addEventListener("click", () => {
+            alert("This method is working! hehehe");
+          });
+        });
+    </script>
+
+    <script>
+      const box = document.getElementById("hoverBox");
+
+      prompt(box);
+
+      // Mouse enters element
+      box.addEventListener("mouseenter", () => {
+        box.style.backgroundColor = "orange";
+        box.textContent = "Hovered!";
+      });
+
+      // Mouse leaves element
+      box.addEventListener("mouseleave", () => {
+        box.style.backgroundColor = "lightblue";
+        box.textContent = "Hover me";
+      });
+    </script>
+  </body>
+</html>
