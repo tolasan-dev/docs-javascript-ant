@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--  define element by className  -->
+
+    <h1 class="txt"></h1>
+    <h1 class="txt"></h1>
+    <script>
+      // document.getElementsByClassName('txt')
+      console.log(document.getElementsByClassName("txt"));
+
+      let Ctxt = document.getElementsByClassName("txt");
+
+      //    1. How to implement the way by use convert collection to array object
+      //   let arr = [...Ctxt];
+      //   arr.forEach((element) => {
+      //     console.log(element);
+      //   });
+
+      //   2. How to use for loop
+      for (let i = 0; i < Ctxt.length; i++) {
+        console.log(Ctxt[i]);
+      }
+
+      //    Queryselector
+      console.log(document.getquerySelector("txt"));
+
+      let nodelist = document.querySelectorAll("txt");
+
+      nodelist.forEach((element) => {
+        console.log(element);
+      });
+    </script>
+  </body>
+</html>
