@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Strength Checker</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      input {
+        padding: 10px;
+      }
+      .weak {
+        color: red;
+      }
+      .strong {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>🔐Password Strength Checker</h2>
+
+    <input type="password" id="password" placeholder="Enter password" />
+    <br /><br />
+    <input type="checkbox" id="showPassword" onchange=" passwordInput()" /> Show
+    Password <br /><br />
+    <span id="strength"></span>
+
+    <script>
+      const passwordEnter = document.getElementById("password");
+      const strengthText = document.getElementById("strength");
+      const showPassword = document.getElementById("showPassword");
+
+      function passwordInput() {
+        const password = passwordEnter.value;
+
+        if (password === "") {
+          strengthText.innerText = "";
+          strengthText.className = "";
+          return;
+        }
+
+        let strength = "";
+
+        if (password.length < 6) {
+          strength = "❌ Weak password";
+          strengthText.className = "weak";
+        } else if (
+          /^(?=(.*[a-z]|.*[A-Z]|.*\d|.*[^\w\s]){2,}).{8,}$/.test(password)
+        ) {
+          strength = "✅ Strong Password";
+          strengthText.className = "strong";
+        }
+        strengthText.innerText = `${strength}`;
+      }
+
+      showPassword.addEventListener("change", function () {
+        passwordEnter.type = showPassword.checked ? "text" : "password";
+      });
+    </script>
+  </body>
+</html>
