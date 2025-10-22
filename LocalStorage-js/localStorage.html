@@ -1,0 +1,45 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // localStorage.setItem(key, value): Stores a key-value pair.
+      //  The value must be a string; objects and arrays need to be converted to strings using JSON.stringify() before storage.
+
+      //
+
+      //   let user = { name: "Alice", age: 20 };
+
+      //   const students = { name: "san tola", age: 20 };
+
+      //   // Store
+      //   const studentJson = localStorage.setItem(
+      //     "students",
+      //     JSON.stringify(students)
+      //   );
+
+      //   // Retrieve
+      //   let storedUser = JSON.parse(studentJson.getItem("students"));
+      //   console.log(storedUser.name); // Alice
+
+      const colors = ["red", "green", "blue", "black"];
+
+      // statement to store in local but convert array to json data
+      localStorage.setItem("colors", JSON.stringify(colors));
+
+      // fetch and convert json to object stored colors
+      let storageColor = JSON.parse(localStorage.getItem("colors"));
+
+      //   colors.forEach(function (color, index) {
+      //     console.log(color);
+      //   });
+
+      for (let i = 0; i < colors.length; i++) {
+        console.log(colors[0]);
+      }
+    </script>
+  </body>
+</html>
