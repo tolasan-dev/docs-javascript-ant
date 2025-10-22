@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <title>Form Register</title>
+  </head>
+  <body>
+    <section>
+      <div class="row justify-content-center mt-5">
+        <div class="col-4">
+          <div class="card p-4 rounded-4">
+            <h3 class="text-center mb-4">User Infor Dashboard</h3>
+            <form>
+              <div class="mb-4">
+                <input type="text" class="form-control" id="inputText" />
+              </div>
+              <div class="mb-4">
+                <input type="password" class="form-control" id="InputEmail" />
+              </div>
+
+              <div class="mb-4">
+                <input
+                  type="date"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                />
+              </div>
+              <div class="mb-4 form-check"></div>
+              <button
+                type="button"
+                class="btn btn-primary w-100 fs-5"
+                onclick="submitFormregister()"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseResult"
+                aria-expanded="false"
+                aria-controls="collapseResult"
+              >
+                Generate Infor
+              </button>
+            </form>
+            <div>
+              <p class="d-inline-flex gap-1"></p>
+              <div class="collapse" id="collapseResult">
+                <div class="card card-body"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // define get value from user input
+
+      function submitFormregister() {
+        // button is type="button" so no event to prevent here
+        let userInput = document.getElementById("inputText").value;
+        let showResult = document.querySelector("#collapseResult .card-body");
+
+        console.log(userInput);
+
+        // validate as email using a proper regular expression
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(userInput)) {
+          console.log("invalid input");
+          showResult.innerHTML = `Invalid input`;
+        } else {
+          console.log("valid input");
+          showResult.innerHTML = `Valid email: ${userInput}`;
+        }
+      }
+
+      function ResultShow() {}
+    </script>
+  </body>
+</html>
