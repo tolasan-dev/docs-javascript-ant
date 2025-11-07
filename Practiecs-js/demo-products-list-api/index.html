@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  fetch("http://127.0.0.1:8000/api/products")
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+      return res.json();
+    })
+    .then((products) => {
+      let html = "";
+      products.forEach((p) => {
+        html += `
+          <div>
+            <img src="${p.image}" width="200" alt="${p.name}">
+            <p>${p.name} - $${p.price}</p>
+          </div>
+        `;
+      });
+      document.body.innerHTML = html;
+    })
+    .catch((err) => console.error("Error:", err));
+</script>
+
+</body>
+</html>

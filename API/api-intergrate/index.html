@@ -1,0 +1,65 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <main>
+      <section class="container py-5">
+        <header class="d-flex justify-content-between border-bottom pb-3">
+          <h2 class="">Article</h2>
+          <button type="button" class="btn btn-primary">Add Article</button>
+        </header>
+        <div class="row" id="product"></div>
+      </section>
+    </main>
+    <script>
+      fetch("http://articles.csm.linkpc.net/api/articles")
+        .then((res) => res.json())
+        .then((data) => {
+          const productRow = document.getElementById("product");
+
+          data.forEach((item) => {
+            const card = document.createElement("div");
+            card.classList.add("col-md-4", "mb-4");
+
+            let imageUrl;
+
+            // if-else statement to check if image is null
+            if (item.image == null && item.image == "") {
+              imageUrl =
+                "https://www.eclosio.ong/wp-content/uploads/2018/08/default.png";
+              console.log(imageUrl);
+            } else {
+              imageUrl = item.image;
+            }
+
+            card.innerHTML = `
+          <div class="card h-100">
+            <img src="http://articles.csm.linkpc.net/uploads/${imageUrl}" class="card-img-top" alt="${
+              item.title
+            }">
+            <div class="card-body">
+              <h5 class="card-title">${item.title}</h5>
+              <p class="card-text">${item.content || "No description"}</p>
+            </div>
+            <div class="card-footer text-muted">
+              Article ID: ${item.id}
+            </div>
+          </div>
+        `;
+
+            productRow.appendChild(card);
+          });
+        })
+        .catch((error) => console.error("Error", error));
+    </script>
+  </body>
+</html>

@@ -56,8 +56,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      const deleteId = null;
+      
+      let deleteId = null;
 
+      // Load articles
       fetch("http://articles.csm.linkpc.net/api/articles")
         .then((res) => res.json())
         .then((data) => {
@@ -77,13 +79,16 @@
                     <p class="card-text">${element.content}</p>
                   </div>
                   <div class="d-flex gap-2 p-3">
-                    <button type="button" class="btn btn-danger" onclick="deleteAllArticles()">Delete</button>
-                    <button type="button" class="btn btn-primary" onclick="viewArticle(${
-                      element.id
-                    })">View</button>
-                    <button type="button" class="btn btn-success" onclick="editArticle(${
-                      element.id
-                    })">Edit</button>
+                    <!-- FIX 2: Call showDeleteModal with correct ID -->
+                    <button type="button" class="btn btn-danger" onclick="showDeleteModal(${element.id})">
+                      Delete
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="viewArticle(${element.id})">
+                      View
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="editArticle(${element.id})">
+                      Edit
+                    </button>
                   </div>
                 </div>
               </div>
@@ -91,94 +96,50 @@
           });
 
           document.getElementById("card-item").innerHTML = card;
-        });
+        })
+        .catch((err) => console.error("Error loading articles:", err));
+
 
       function createArticle() {
         location.href = "create.html";
       }
 
-      function deletedData(id) {
-        const confirmResult = confirm(
-          "Do you want to deleted this articles all ?  no:yes "
-        );
-        console.log(confirmResult);
-      }
-      //   function showDeleteModal(id) {
-      //     deleteId = id;
-      //     const modal = new bootstrap.Modal(document.getElementById("deleteModal"));
-      //     modal.show();
-      //   }
-
-      //   document.getElementById("confirmDeleteBtn").addEventListener("click", () => {
-      //     if (deleteId) {
-      //       fetch(`http://articles.csm.linkpc.net/api/articles/${deleteId}`, {
-      //         method: "DELETE",
-      //       })
-      //         .then((res) => res.json())
-      //         .then(() => location.reload());
-      //     }
-      //   });
-
-      function deleteAllArticles() {
-
-        // Step 1៖ ទាញយក data ពីរ endpoint នៃ articles មកទាំងអស់
-        fetch("http://articles.csm.linkpc.net/api/articles")
-        
-        // convert .....
-          .then((res) => res.json())
-          .then((data) => {
-            if (!data.length) {
-              alert("No articles to delete!");
-              return;
-            }
-
-            if (
-              !confirm(
-                `Are you sure you want to delete all ${data.length} articles?`
-              )
-            )
-              return;
-
-            // Step 2: Loop through and delete each article
-            const deletePromises = data.map((article) =>
-              fetch(
-                `http://articles.csm.linkpc.net/api/articles/${article.id}`,
-                {
-                  method: "DELETE",
-                }
-              )
-                .then((res) => res.json())
-                .then(() => location.reload())
-            );
-
-            // Step 3: Wait for all deletions to complete
-            Promise.all(deletePromises)
-              .then(() => {
-                alert("All articles deleted successfully!");
-                location.reload(); // refresh page after deletion
-              })
-              .catch((err) => console.error(err));
-          })
-          .catch((err) => console.error(err));
+      function viewArticle(id) {
+        location.href = `view.html?id=${id}`;
       }
 
       function editArticle(id) {
-        localStorage.setItem("articleID", id);
-        location.href = "edit.html";
+        location.href = `edit.html?id=${id}`;
       }
 
-      //   function viewArticle(id) {
-      //     location.href = `view.html?id=${id}`;
-      //   }
-    </script>
+      // FIX 3: Properly show modal and store ID
+      function showDeleteModal(id) {
+        deleteId = id; // Now works because `let`
+        const modal = new bootstrap.Modal(document.getElementById("deleteModal"));
+        modal.show();
+      }
 
-    <script>
-      const articleId = localStorage.setItem("articleID");
+      // FIX 4: Confirm delete button
+      document.getElementById("confirmDeleteBtn").addEventListener("click", () => {
+        if (deleteId) {
+          fetch(`http://articles.csm.linkpc.net/api/articles/${deleteId}`, {
+            method: "DELETE",
+          })
+            .then((res) => {
+              if (!res.ok) throw new Error("Delete failed");
+              return res.json();
+            })
+            .then(() => {
+              location.reload(); // Refresh to reflect deletion
+            })
+            .catch((err) => {
+              console.error("Delete error:", err);
+              alert("Failed to delete article.");
+            });
+        }
+      });
 
-      fetch("http://articles.csm.linkpc.net/api/articles/${article.id")
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-        .then((err) => console.error(err));
+    
     </script>
   </body>
 </html>

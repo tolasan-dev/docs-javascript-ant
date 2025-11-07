@@ -1,0 +1,2 @@
+fetch;
+array.forEach((element) => {});

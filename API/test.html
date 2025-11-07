@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <style></style>
+  <body>
+    <div class="container">
+      <div class="row gap-4" id="card">
+        <div class="col-12 col-md-4">
+          <div class="card"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      fetch("http://articles.csm.linkpc.net/api/articles")
+        .then((res) => res.json())
+        .then((data) => {
+          const containerCard = document.getElementById("card");
+          let card = "";
+          data.forEach((element) => {
+            card += `
+            <div class="card" style="width: 18rem;">
+  // <img src="${element.image}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">${element.title}</h5>
+    <p class="${element.content}"</p>
+   
+  </div>
+</div>
+            `;
+          });
+          containerCard.innerHTML = card;
+        })
+        .catch((err) => {
+          console.error("Failed to load products:", err);
+        });
+    </script>
+  </body>
+</html>
