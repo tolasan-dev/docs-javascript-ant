@@ -1,0 +1,92 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Article</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="d-flex justify-content-center align-content-center py-4">
+        <form id="articleForm" class="w-50 card p-3" enctype="multipart/form-data">
+          <div class="mb-3 p-4">
+            <label for="title" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              name="title"
+              id="title"
+              placeholder="Enter article title"
+              required
+            />
+          </div>
+
+          <div class="mb-3 p-4">
+            <label for="content" class="form-label">Write whatever you want :</label>
+            <textarea
+              class="form-control"
+              name="content"
+              id="content"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+
+          <div class="mb-3 p-4">
+            <label for="imageUrl" class="form-label">Choose file</label>
+            <input
+              type="file"
+              class="form-control"
+              name="image"
+              id="imageUrl"
+              accept="image/*"
+            />
+          </div>
+          <button type="button" class="btn btn-primary" onclick="submitForm()">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function submitForm() {
+        const title = document.getElementById("title").value.trim();
+        const content = document.getElementById("content").value.trim();
+        const imageInput = document.getElementById("imageUrl");
+
+        if (!title || !content) {
+          alert("Please fill out all fields!");
+          return;
+        }
+
+        const payload = new FormData();
+        payload.append("title", title);
+        payload.append("content", content);
+        if (imageInput.files.length > 0) {
+          payload.append("image", imageInput.files[0]);
+        }
+
+        fetch("http://articles.csm.linkpc.net/api/articles", {
+          method: "POST",
+          body: payload,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Server Response:", data);
+            alert("Article submitted successfully!");
+            window.location.href = "index.html";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+          });
+      }
+    </script>
+  </body>
+</html>

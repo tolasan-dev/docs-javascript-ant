@@ -1,45 +1,35 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Filter Example</title>
   </head>
   <body>
+    <h1 id="show"></h1>
+
     <script>
-      // localStorage.setItem(key, value): Stores a key-value pair.
-      //  The value must be a string; objects and arrays need to be converted to strings using JSON.stringify() before storage.
+      const colors = ["red", 1, "blue", "black"];
 
-      //
-
-      //   let user = { name: "Alice", age: 20 };
-
-      //   const students = { name: "san tola", age: 20 };
-
-      //   // Store
-      //   const studentJson = localStorage.setItem(
-      //     "students",
-      //     JSON.stringify(students)
-      //   );
-
-      //   // Retrieve
-      //   let storedUser = JSON.parse(studentJson.getItem("students"));
-      //   console.log(storedUser.name); // Alice
-
-      const colors = ["red", "green", "blue", "black"];
-
-      // statement to store in local but convert array to json data
+      // Store in localStorage
       localStorage.setItem("colors", JSON.stringify(colors));
 
-      // fetch and convert json to object stored colors
-      let storageColor = JSON.parse(localStorage.getItem("colors"));
+      // Retrieve and parse
+      const storedColors = JSON.parse(localStorage.getItem("colors")) || [];
 
-      //   colors.forEach(function (color, index) {
-      //     console.log(color);
-      //   });
+      // Filter only string values
+      const filteredColors = storedColors.filter(
+        (item) => typeof item === "string"
+      );
 
-      for (let i = 0; i < colors.length; i++) {
-        console.log(colors[0]);
-      }
+      // Log result
+      console.log(filteredColors); // ["red", "blue", "black"]
+
+      filteredColors.forEach((color) => {
+       const p = document.createElement("h2");
+        p.textContent = color;
+        document.body.appendChild(p);
+      });
     </script>
   </body>
 </html>

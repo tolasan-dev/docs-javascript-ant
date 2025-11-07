@@ -6,17 +6,31 @@
   </head>
   <body>
     <script>
-      const err = new Error("Something went wrong");
-      throw err;
+      //
 
       function divide(a, b) {
-
-        if (a === b) throw("Divison by zero not allow");
-
-        return a/b;
+        if (b === 0) {
+          throw new Error("Division by zero is not allowed!");
+        }
+        return a / b;
       }
 
-      
+      try {
+        // prompt for both numbers and convert to Number
+        const nOne = Number(prompt("Enter your number a: "));
+        const nTwo = Number(prompt("Enter your number b: "));
+
+        if (Number.isNaN(nOne) || Number.isNaN(nTwo)) {
+          throw new Error("Invalid number input");
+        }
+
+        const result = divide(nOne, nTwo);
+
+        console.log("Result:", result);
+        alert("Result: " + result);
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
     </script>
   </body>
 </html>
