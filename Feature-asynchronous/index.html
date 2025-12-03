@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p id="app"></p>
+
+    <button type="button" id="btn" onclick="getReply()">Click</button>
+    <span id="message"></span>
+
+    <script>
+      let app = document.getElementById("app");
+      app.innerHTML = `Hello world`;
+
+      // Fake async functionk
+      function waitForReply() {
+        return new Promise((resolve) => {
+          setTimeout(() => resolve("Async reply done!"), 2000);
+        });
+      }
+
+      async function getReply() {
+        // Get the <span> element, not its value
+        let message = document.getElementById("message");
+
+        // Update the span text
+        message.innerHTML = "Loading...";
+
+        // Wait for async task
+        const reply = await waitForReply();
+
+        // Show the reply
+        message.innerHTML = "Reply received: " + reply;
+
+        console.log("Reply received:", reply);
+      }
+    </script>
+  </body>
+</html>
